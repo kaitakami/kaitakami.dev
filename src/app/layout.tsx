@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans';
+import { Young_Serif } from 'next/font/google'
 import './globals.css'
+
+const youngSerif = Young_Serif({
+  weight: ['400'],
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
   title: 'Kai Takami',
@@ -14,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={GeistSans.className}>{children}</body>
+      <body className={`${youngSerif.className} bg-gradient-to-br from-background-start to-background-end min-h-screen text-primary`}>{children}</body>
     </html>
   )
 }
