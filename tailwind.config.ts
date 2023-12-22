@@ -21,6 +21,8 @@ const config: Config = {
         onBackground: 'var(--color-on-background)',
         onSurface: 'var(--color-on-surface)',
         onError: 'var(--color-on-error)',
+        "background-start": 'var(--background-start)',
+        "background-end": 'var(--background-end)',
       },
     },
   },
