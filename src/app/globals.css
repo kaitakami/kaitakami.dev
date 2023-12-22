@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background-start: #f1f1f1;
-  --background-end: #e2e2e2;
+  --background-start: #e1e1e1;
+  --background-end: #ececec;
   --color-primary: #1f1f1f;
   --color-secondary: #343434;
   --color-dark: #d6d6d6;
@@ -13,8 +13,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-start: #151515;
-    --background-end: #1f1f1f;
+    --background-start: #101010;
+    --background-end: #1a1a1a;
     --color-primary: #f1f1f1;
     --color-secondary: #d6d6d6;
     --color-dark: #343434;
@@ -24,11 +24,4 @@
 
 .text-pretty {
   text-wrap: pretty;
-}
-
-.weird-text {
-  -webkit-text-stroke: 2px var(--color-primary);
-  /* Specify the width and color of the stroke */
-  color: transparent;
-  /* Set the fill color to transparent */
 }
