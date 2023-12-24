@@ -1,0 +1,136 @@
+/* Basic reset for Markdown content inside .mdx class container */
+
+/* Headings */
+.mdx h1,
+.mdx h2,
+.mdx h3,
+.mdx h4,
+.mdx h5,
+.mdx h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.mdx h1 {
+  font-size: 2.5em;
+  /* Increased from 2em */
+}
+
+.mdx h2 {
+  font-size: 2em;
+  /* Increased from 1.5em */
+}
+
+.mdx h3 {
+  font-size: 1.75em;
+  /* Increased from 1.25em */
+}
+
+/* Paragraphs */
+.mdx p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  /* Increased from 16px */
+}
+
+/* Links */
+.mdx a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.mdx a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+.mdx ul {
+  padding-left: 2em;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: disc;
+}
+
+.mdx ol {
+  padding-left: 2em;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: decimal;
+}
+
+/* Code blocks and inline code */
+.mdx pre,
+.mdx code {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+  font-size: 90%;
+  /* Slightly increased for better readability */
+}
+
+.mdx pre {
+  background-color: #9797971b;
+  padding: 16px;
+  overflow: auto;
+  border-radius: 6px;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.mdx code {
+  background-color: rgba(27, 31, 35, .05);
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 90%;
+  /* Consistent with pre font size increase */
+  border-radius: 6px;
+}
+
+.mdx pre>code {
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+}
+
+/* Blockquotes */
+.mdx blockquote {
+  margin: 0;
+  padding: 0 1em;
+  border-left: .25em solid #dfe2e5;
+  background-color: #f6f8fa;
+}
+
+/* Images */
+.mdx img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+/* Tables */
+.mdx table {
+  border-collapse: collapse;
+  margin-top: 0;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.mdx table th,
+.mdx table td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.mdx table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.mdx table th {
+  font-weight: 600;
+}
