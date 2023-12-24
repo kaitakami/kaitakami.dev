@@ -10,7 +10,7 @@ const youngSerif = Young_Serif({
 
 const Hero = () => {
   return (
-    <section className="h-[80vh] flex flex-col sm:justify-center relative space-y-3 sm:pt-0 pt-40">
+    <section className="h-[80svh] flex flex-col sm:justify-center relative space-y-3 sm:pt-0 pt-36">
       <div className="relative">
         <h1 className={`${youngSerif.className} scroll-m-20 text-6xl tracking-tight lg:text-8xl`}>
           Kai<br />
