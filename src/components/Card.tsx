@@ -22,11 +22,13 @@ export const Card: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <motion.div
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true }}
       variants={{
         hidden: { opacity: 0 },
-        visible: { opacity: 1, scale: 1 },
+        visible: { opacity: 1 },
       }}
+      transition={{ delay: 0.1 }}
       onMouseMove={onMouseMove}
       className="overflow-hidden relative duration-700 border rounded-xl hover:bg-background/80 group md:gap-8 hover:border-dark/50 border-dark"
     >
