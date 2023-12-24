@@ -1,6 +1,6 @@
 import { Card } from './Card';
-import { Article } from './Article';
-import { blogs } from '../../blogs';
+import { Article } from './BlogCard';
+import { blogs } from '../../content/blogs';
 
 export interface Blog {
   title: string;
@@ -9,7 +9,7 @@ export interface Blog {
   slug: string;
 }
 
-const Blog = () => {
+const Blogs = () => {
   return (
     <section className='py-5'>
       <h2 className='scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0'>Blog</h2>
@@ -47,6 +47,6 @@ const Blog = () => {
   )
 }
 
-export default Blog
+export default Blogs
 
 
