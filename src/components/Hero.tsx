@@ -39,6 +39,7 @@ const Hero = () => {
               target="_blank"
             >
               <social.icon />
+              <span className="sr-only">{social.text}</span>
             </Link>
           ))
           }
@@ -54,6 +55,7 @@ const Hero = () => {
             target="_blank"
           >
             <social.icon />
+            <span className="sr-only">{social.text}</span>
           </Link>
         ))
         }
