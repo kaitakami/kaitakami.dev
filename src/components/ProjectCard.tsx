@@ -31,6 +31,7 @@ export const Article = ({ project }: { project: Project }) => {
         {project.github && (
           <Link className="flex items-center justify-center text-sm text-secondary rounded shadow h-9 px-4 py-3 bg-[#70707008] w-full hover:bg-primary hover:text-dark transition-colors" href={project.github} target="_blank">
             <GithubIcon className="h-5" />
+            <span className="sr-only">Github repo</span>
           </Link>
         )}
         {project.demo && (
