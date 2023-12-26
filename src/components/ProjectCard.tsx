@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Project } from "./Projects";
-import { Github, GithubIcon } from "lucide-react";
+import { GithubIcon } from "lucide-react";
 
 export const Article = ({ project }: { project: Project }) => {
   return (
