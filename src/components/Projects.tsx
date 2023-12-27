@@ -1,6 +1,6 @@
 import { Card } from './Card';
 import { Article } from './ProjectCard';
-import { projects } from '../../content/projects';
+import { projects } from '../content/projects';
 
 export interface Project {
   title: string;

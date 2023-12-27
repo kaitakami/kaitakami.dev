@@ -1,6 +1,6 @@
 import { Card } from './Card';
 import { Article } from './BlogCard';
-import { blogs } from '../../content/blogs';
+import { blogs } from '../content/blogs';
 
 export interface Blog {
   title: string;
