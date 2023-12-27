@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Syne } from "next/font/google"
 import './globals.css'
 
@@ -33,7 +35,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${syneFont.className} bg-gradient-to-br from-background-start to-background-end min-h-screen text-primary`}>{children}</body>
+      <body className={`${syneFont.className} bg-gradient-to-br from-background-start to-background-end min-h-screen text-primary`}>
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   )
 }
