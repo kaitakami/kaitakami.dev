@@ -1,0 +1,81 @@
+export const metadata = {
+  title: 'Do not buy Gravity Boilerplate',
+  author: 'Kai Takami',
+  description: 'Why we don\'t recommend Gravity Boilerplate and what we would have done differently',
+}
+
+# Why You Shouldn't Buy Gravity Based on Our Experience
+
+## Introduction
+
+After months of working with Gravity, I want to share why it’s been such a frustrating experience for us. If you’re considering using this SaaS boilerplate, I hope our story helps you make a more informed decision.
+
+## Core Issues with Gravity
+
+### 1. **Incomplete and Disorganized Documentation**
+
+Gravity’s documentation is practically nonexistent. There are no clear guidelines for input/output, and core functionalities are left completely undocumented. This lack of clarity makes it very difficult to work with.
+
+### 2. **Missing Core Functionalities**
+
+Gravity claims to be a comprehensive SaaS boilerplate, but it’s missing a lot:
+   - **Logging:** No proper logging, just console logs scattered throughout the code.
+   - **TypeScript Support:** No TypeScript support, so we had to set it up ourselves, which added unnecessary complexity.
+   - **Rate Limits and Swagger Configuration:** No built-in options for setting custom rate limits or configuring Swagger for API documentation.
+   - **Docker and Linters:** Missing Docker support and any form of code linting (ESLint or Biome).
+   - **Reliable Testing:** The tests provided are inadequate and break with any complex implementation.
+   - **AI and Emailing Services:** Outdated AI endpoints and a dysfunctional emailing service add to the problems.
+   - **Middleware:** There is no middleware support, which is a core feature expected in modern applications. This makes handling requests and responses more complicated than it should be.
+
+### 3. **Backend Limitations**
+
+The backend structure of Gravity looks organized initially but falls apart when modifications are needed. Adding or changing functionality often breaks the system, making it inflexible and difficult to work with.
+
+### 4. **Frontend Challenges**
+
+The frontend presents several challenges:
+   - **User Data Handling:** It uses local storage for user data, which is inefficient and doesn’t scale well. Storing everything in the user context means every time a user opens the website, it fetches all their data, which is unnecessary and costly. A better approach would be using cookies or just storing the user ID and fetching additional data as needed.
+   - **Auth Context:** The auth context doesn’t return the user ID by default, complicating user identification. Knowing the user ID is crucial for many operations, yet this basic piece of information isn’t readily available.
+   - **Migration Difficulties:** The mix of TailwindCSS and SASS makes it challenging to migrate to a single styling framework. This isn’t just about CSS – the entire implementation makes migrating to other solutions or frameworks difficult and time-consuming.
+   - **Excessive Wrappers:** Overuse of wrapper components increases complexity and makes migration harder. Simple components like buttons have excessive wrappers that add unnecessary functionality, making even minor changes a headache.
+   - **Custom Hooks:** The use of a custom `useAPI` hook instead of standard solutions adds unnecessary complexity. This hook uses Axios under the hood, but this isn’t clearly mentioned, leading to confusion and inconsistent methods for backend communication.
+
+### 5. **Performance and Upgradability Issues**
+
+Gravity is not designed for optimal performance or easy upgrades:
+   - **Server Components:** It’s not ready for server components, making future upgrades challenging. Given the $500 - $3000 price tag, we expected support for early features like server components.
+   - **Poor Performance:** The application does not prioritize performance, leading to inefficiencies.
+
+### 6. **Non-Refundable Product**
+
+The fact that Gravity is non-refundable speaks volumes about the confidence in the product. While the author may not think the product is bad, our experience has been so negative that we believe this policy exists because the product has significant flaws.
+
+### 7. **Hard to Implement New Features**
+
+Implementing new features in Gravity is a struggle. For example, adding shadcn/ui components took the author months, a task that should have taken a few days. This difficulty is due to the poor architecture of both the frontend and backend.
+
+## Personal Frustrations
+
+1. **Painful Modifications:** Making even simple changes often required hours of debugging and testing. It was disheartening to spend so much time on tasks that should be straightforward.
+
+2. **Confusing Structure:** The confusing file structure and mix of technologies made it feel like we were constantly reinventing the wheel. This was especially frustrating when trying to implement industry-standard solutions.
+
+3. **Lack of Clarity:** With so many undocumented features and unclear processes, we were left guessing how things were supposed to work. This guesswork led to countless errors and wasted time.
+
+## Our Recommendation
+
+Based on our experience, we can’t recommend Gravity to anyone. There are many better alternatives, including free options, that are far more reliable and efficient. Gravity has slowed us down, caused numerous headaches, and made our code more error-prone.
+
+## What We Would Have Done Differently
+
+Given the chance, we would have avoided Gravity altogether. Building our own solution or using a different boilerplate would have been far more productive. Solutions like Supabase for auth or NextAuth for Next.js would have been much better choices.
+
+## Moving Forward
+
+We’ve decided to leave Gravity behind. We will keep the existing Gravity endpoints as legacy and build a new backend for future implementations. The frontend will remain on Gravity for now, as it’s easier to migrate later.
+
+## Final Note
+
+This is ultimately our opinion and doesn't represent the absolute truth. We don't think the author is bad at all, gravity could have been a really good boilerplate 4 years ago, but not now in 2024.
+
+Our experience with Gravity has been overwhelmingly negative. We strongly advise against using or purchasing Gravity. There are far better options available that will save you time, money, and frustration. Avoid Gravity at all costs.
