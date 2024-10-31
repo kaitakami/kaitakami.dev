@@ -1,7 +1,12 @@
-import { LinkedinIcon, GithubIcon } from "lucide-react"
+import { LinkedinIcon, GithubIcon, X } from "lucide-react"
 
 const websiteData = {
   "socials": [
+    {
+      "href": "https://x.com/kaitakami_",
+      "text": "X",
+      "icon": X
+    },
     {
       "href": "https://linkedin.com/in/kaitakami",
       "text": "LinkedIn",
