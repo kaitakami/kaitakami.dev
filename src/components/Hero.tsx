@@ -18,6 +18,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          // @ts-ignore
           className={`${youngSerif.className} scroll-m-20 text-6xl tracking-tight lg:text-8xl`}>
           Kai<br />
           Takami
@@ -26,6 +27,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
+          // @ts-ignore
           className={"max-w-sm leading-relaxed [&:not(:first-child)]:mt-6 text-secondary text-pretty pb-16 text-lg"}>
           Full-stack software engineer with 3+ years of experience focused on building user-centric products, delivering high-quality code, emphasizing reliable systems, and ensuring scalability.
         </motion.p>
