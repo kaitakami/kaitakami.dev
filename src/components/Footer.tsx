@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const Footer = ({ onToggleTerminal }: { onToggleTerminal: () => void }) => {
+const Footer = ({ onToggleTerminal }: { onToggleTerminal?: () => void }) => {
   const pathname = usePathname()
 
   return (
