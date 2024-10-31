@@ -2,25 +2,39 @@ import type { Blog } from "@/components/Blogs"
 
 export const blogs: Blog[] = [
   {
-    title: "Why you should not buy Gravity",
-    date: "2024-07-27",
-    description: "A real and honest review of gravity boilerplate. And why we don't recommend it after months of using it.",
-    slug: "why-you-should-not-buy-gravity"
-  },
-  {
     title: "Andrej Karpathy - State of GPT",
     date: "2023-06-04",
     description: "Summary of the 2023 Microsoft Build Andrej Karpathy talk",
     slug: "andrej-karpathy-state-of-gpt"
   },
   {
-    title: "How we built a Whatsapp Chatbot in 48 hours",
-    description: "And made our first sale in 24 hours",
-    slug: "how-we-built-a-whatsapp-chatbot-in-48-hours"
+    title: "'The new coding'",
+    description: "How coding has changed over the last 2 years and why you should learn it",
+    slug: "the-new-coding"
   },
   {
-    title: "Joining a B2B early-stage startup",
-    description: "Learnings and reflections from my first 6 months",
-    slug: "joining-a-b2b-early-stage-startup"
+    title: "First-employee at a YC startup",
+    description: "What was it like to be the first employee at a YC startup, and what I'd have done differently",
+    slug: "first-employee-at-a-yc-startup"
   },
+  {
+    title: "Advice to my 15 year old self",
+    description: "What I would tell my 15 year old self moving to Japan",
+    slug: "advice-to-my-15-year-old-self"
+  },
+  {
+    title: "What Numbax taught me",
+    description: "What I learned from my first startup",
+    slug: "what-numbax-taught-me"
+  },
+  {
+    title: "How to think rationally",
+    description: "A step-by-step guide to developing systematic and logical thinking",
+    slug: "how-to-think-rationally"
+  },
+  {
+    title: "My long-life project",
+    description: "What I'm working on my 30s, I'm calling it my long-life project",
+    slug: "my-long-life-project"
+  }
 ]

@@ -2,20 +2,34 @@ import type { Project } from "@/components/Projects"
 
 export const projects: Project[] = [
   {
-    title: "Kazeai",
-    description: "Improve your communication skills with straight-forward feedback",
+    title: "gzip-clone",
+    description: "A simple gzip clone written in C",
+    date: "2024-10-01",
+    github: "https://github.com/kaitakami/gzip-clone",
+  },
+  {
+    title: "elysiajs, drizzleORM, lucia-auth template",
+    description: "A template for a full-stack web app using ElysiaJS, Drizzle ORM, and Lucia Auth",
+    date: "2024-09-15",
+    github: "https://github.com/kaitakami/elysiajs-drizzleORM-lucia-auth-template",
+  },
+  {
+    title: "Time Left Alive",
+    description: "A simple countdown timer for your life",
+    date: "2024-06-20",
+    demo: "https://timeleftalive.com?ref=kaitakami.dev"
   },
   {
     title: "Kenso",
     date: "2023-11-24",
     description: "AI companion for teachers",
-    demo: "https://www.kenso.tech"
+    github: "https://github.com/kenso-tech",
   },
   {
     title: "Platzbot",
     date: "2023-10-01",
     description: "Your fitness Whatsapp bot",
-    demo: "https://www.youtube.com/watch?v=S-QlQtG2pU0&t=8s"
+    demo: "https://www.youtube.com/watch?v=S-QlQtG2pU0&t=8s",
   },
   {
     title: "Fingaku",
@@ -29,7 +43,6 @@ export const projects: Project[] = [
     date: "2023-04-18",
     description: "Collaborate with other developers and build projects together",
     github: "https://github.com/kaitakami/enzan",
-    demo: "https://www.enzan.dev/"
   },
   {
     title: "Learn React Hooks /w TypeScript",
