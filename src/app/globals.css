@@ -11,6 +11,10 @@
   --color-alternative: #2ecc71;
 }
 
+body {
+  background: var(--background-start);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background-start: #101010;
@@ -24,4 +28,11 @@
 
 .text-pretty {
   text-wrap: pretty;
+}
+
+@layer base {
+  input::selection {
+    background-color: #4a5568;
+    color: #a0aec0;
+  }
 }
