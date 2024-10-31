@@ -24,6 +24,30 @@ const config: Config = {
         "background-start": 'var(--background-start)',
         "background-end": 'var(--background-end)',
       },
+      animation: {
+        'gradient-x': 'gradient-x 3s ease-in-out infinite',
+        'pulse-subtle': 'pulse 4s ease-in-out infinite',
+      },
+      keyframes: {
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 100%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 100%',
+            'background-position': 'right center',
+          },
+        },
+        'pulse': {
+          '0%, 100%': {
+            opacity: '1',
+          },
+          '50%': {
+            opacity: '0.7',
+          },
+        },
+      },
     },
   },
   plugins: [],
