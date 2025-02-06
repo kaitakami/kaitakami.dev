@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     const savedView = localStorage.getItem('isTerminalView')
-    setIsTerminalView(savedView !== null ? JSON.parse(savedView) : true)
+    setIsTerminalView(savedView !== null ? JSON.parse(savedView) : false)
   }, [])
 
   const toggleView = () => {
