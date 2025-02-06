@@ -1,4 +1,11 @@
 /* Basic reset for Markdown content inside .mdx class container */
+.mdx {
+  font-family: var(--font-lora), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  line-height: 1.75;
+  color: var(--color-primary);
+  font-weight: 400;
+  font-feature-settings: "liga" 1, "kern" 1;
+}
 
 /* Headings */
 .mdx h1,
@@ -7,99 +14,93 @@
 .mdx h4,
 .mdx h5,
 .mdx h6 {
-  margin-top: 24px;
-  margin-bottom: 16px;
+  font-family: inherit;
+  margin-top: 2.5em;
+  margin-bottom: 0.8em;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
 }
 
 .mdx h1 {
   font-size: 2.5em;
-  /* Increased from 2em */
+  margin-top: 0;
 }
 
 .mdx h2 {
-  font-size: 2em;
-  /* Increased from 1.5em */
+  font-size: 1.875em;
 }
 
 .mdx h3 {
-  font-size: 1.75em;
-  /* Increased from 1.25em */
+  font-size: 1.5em;
 }
 
 /* Paragraphs */
 .mdx p {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 18px;
-  /* Increased from 16px */
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  font-size: 1.125rem;
+  line-height: 1.75;
 }
 
 /* Links */
 .mdx a {
-  color: #0366d6;
-  text-decoration: none;
+  color: var(--color-alternative);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
 }
 
 .mdx a:hover {
-  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 /* Lists */
-.mdx ul {
-  padding-left: 2em;
-  margin-top: 0;
-  margin-bottom: 0;
-  list-style-type: disc;
+.mdx ul,
+.mdx ol {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-left: 1.625em;
 }
 
-.mdx ol {
-  padding-left: 2em;
-  margin-top: 0;
-  margin-bottom: 0;
-  list-style-type: decimal;
+.mdx li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 /* Code blocks and inline code */
 .mdx pre,
 .mdx code {
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
-  font-size: 90%;
-  /* Slightly increased for better readability */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.925em;
 }
 
 .mdx pre {
-  background-color: #9797971b;
-  padding: 16px;
-  overflow: auto;
-  border-radius: 6px;
-  margin-top: 0;
-  margin-bottom: 16px;
+  background-color: var(--color-dark);
+  padding: 1.25em;
+  border-radius: 0.5em;
+  margin: 1.5em 0;
+  overflow-x: auto;
 }
 
 .mdx code {
-  background-color: rgba(27, 31, 35, .05);
-  padding: .2em .4em;
-  margin: 0;
-  font-size: 90%;
-  /* Consistent with pre font size increase */
-  border-radius: 6px;
-}
-
-.mdx pre>code {
-  padding: 0;
-  margin: 0;
-  background: none;
-  border: none;
+  background-color: var(--color-dark);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
 }
 
 /* Blockquotes */
 .mdx blockquote {
+  margin: 1.5em 0;
+  padding: 1em 1.5em;
+  border-left: 4px solid var(--color-alternative);
+  background-color: var(--color-dark);
+  font-style: italic;
+}
+
+.mdx blockquote p {
   margin: 0;
-  padding: 0 1em;
-  border-left: .25em solid #dfe2e5;
-  background-color: #f6f8fa;
 }
 
 /* Images */

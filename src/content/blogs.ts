@@ -2,6 +2,12 @@ import type { Blog } from "@/components/Blogs"
 
 export const blogs: Blog[] = [
   {
+    title: "Anatomy of Reality",
+    date: "2025-02-06",
+    description: "A deep dive into the subjective nature of reality",
+    slug: "anatomy-of-reality"
+  },
+  {
     title: "Andrej Karpathy - State of GPT",
     date: "2023-06-04",
     description: "Summary of the 2023 Microsoft Build Andrej Karpathy talk",
