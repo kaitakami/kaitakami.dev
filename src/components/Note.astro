@@ -1,0 +1,35 @@
+---
+import { render } from "astro:content";
+import { dict, type Locale } from "../i18n";
+import { isoDate } from "../lib/posts";
+import { shortDate, type Update } from "../lib/updates";
+
+interface Props {
+  note: Update;
+  locale: Locale;
+  /** shown in place of the date, which then moves under the note (home page) */
+  label?: string;
+}
+
+const { note, locale, label } = Astro.props;
+const iso = isoDate(note.date);
+const when = shortDate(note.date, dict[locale].intl);
+const { Content } = await render(note.entry);
+---
+
+<dt id={label ? undefined : note.id}>
+  {label ?? <time datetime={iso}>{when}</time>}
+  {!label && note.where && <span class="where">{note.where}</span>}
+</dt>
+<dd class="note" lang={note.lang === locale ? undefined : note.lang}>
+  <Content />
+  {
+    label && (
+      <p class="meta">
+        <time datetime={iso}>{when}</time>
+        {note.where && <span>{note.where}</span>}
+        <slot />
+      </p>
+    )
+  }
+</dd>

@@ -1,0 +1,119 @@
+---
+import Base from "../layouts/Base.astro";
+import Shelf from "../components/Shelf.astro";
+import Note from "../components/Note.astro";
+import { postsFor } from "../lib/posts";
+import { updatesFor } from "../lib/updates";
+import { dict, localePath, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = dict[locale];
+const posts = await postsFor(locale);
+const [latest] = await updatesFor(locale);
+const rows = [t.rows.now, t.rows.lately, t.rows.off];
+---
+
+<Base title="Kai Takami" description={t.description} page="home" locale={locale}>
+  <section class="lake" slot="hero" data-stage aria-label={t.sceneLabel}>
+    <canvas data-scene aria-hidden="true"></canvas>
+  </section>
+
+  <h1 class="sr-only">Kai Takami</h1>
+
+  <dl class="rows">
+    {
+      rows.map(([label, text]) => (
+        <>
+          <dt>{label}</dt>
+          <dd>
+            <p set:html={text} />
+          </dd>
+        </>
+      ))
+    }
+
+    {
+      latest && (
+        <Note note={latest} locale={locale} label={t.latest}>
+          <a href={localePath(locale, "/notes")}>{t.allUpdates}</a>
+        </Note>
+      )
+    }
+
+    <dt id="subscribe">{t.subscribe.label}</dt>
+    <dd>
+      <p class="lead">{t.subscribe.lead}</p>
+      <form class="subscribe" method="post" action="/api/subscribe" data-subscribe>
+        <input type="hidden" name="lang" value={locale} />
+        <input class="trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          inputmode="email"
+          spellcheck="false"
+          placeholder={t.subscribe.placeholder}
+          aria-label={t.subscribe.placeholder}
+        />
+        <button type="submit">{t.subscribe.button}</button>
+      </form>
+      <p class="meta subscribe-status" role="status" aria-live="polite" data-ok={t.subscribe.ok} data-invalid={t.subscribe.invalid} data-error={t.subscribe.error}>
+        <a href="/rss.xml">{t.subscribe.rss}</a>
+      </p>
+    </dd>
+
+    <dt>{t.elsewhere}</dt>
+    <dd class="links">
+      <a href="https://x.com/kaitakami" rel="me noopener" target="_blank">X</a>
+      <a href="https://github.com/kaitakami" rel="me noopener" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/kaitakami" rel="me noopener" target="_blank">LinkedIn</a>
+    </dd>
+  </dl>
+
+  <section class="writing wide" aria-labelledby="writing">
+    <h2 id="writing" class="label">{t.writing}</h2>
+    <Shelf posts={posts} locale={locale} />
+  </section>
+</Base>
+
+<script>
+  import { mountScene } from "../scripts/scene";
+
+  // email sign-up: post in place, say how it went where the RSS link was
+  const form = document.querySelector<HTMLFormElement>("[data-subscribe]");
+  const status = document.querySelector<HTMLElement>(".subscribe-status");
+  const say = (state: string | null) => {
+    if (!status || !state || !(state in status.dataset)) return;
+    status.textContent = status.dataset[state]!;
+    status.dataset.state = state;
+  };
+  say(new URLSearchParams(location.search).get("subscribe"));
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const button = form.querySelector("button")!;
+    button.disabled = true;
+    try {
+      const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+      const d = await r.json().catch(() => ({ state: "error" }));
+      say(d.state);
+      if (d.state === "ok") form.reset();
+    } catch {
+      say("error");
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  const stage = document.querySelector<HTMLElement>("[data-stage]");
+  const canvas = stage?.querySelector<HTMLCanvasElement>("canvas");
+
+  if (stage && canvas) {
+    const stop = mountScene(canvas, stage);
+    addEventListener("pagehide", stop);
+  }
+</script>

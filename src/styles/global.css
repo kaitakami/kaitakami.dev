@@ -1,0 +1,440 @@
+:root {
+  color-scheme: dark;
+  --paper: #0b0b0e;
+  --ink: #d9d9dc;
+  --link: #ffffff;
+  --muted: #8b8b93;
+  --faint: #55555c;
+  --rule: #1f1f24;
+  --blue: #3169ff;
+  --pale: #a9c2ff;
+  --rose: #f7a1a4;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Hiragino Sans", "Noto Sans JP", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  --gutter: max(24px, env(safe-area-inset-left));
+  --hair: 1px;
+}
+
+@media (min-resolution: 2dppx) {
+  :root { --hair: 0.5px; }
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+::selection {
+  background: #f58a8f;
+  color: #0b0b0e;
+}
+
+a {
+  color: var(--link);
+  font-weight: 450;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+
+a:focus-visible {
+  outline: 1px solid var(--pale);
+  outline-offset: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.col {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---- header: sits over the lake on the home page ---- */
+
+.site-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: calc(24px + env(safe-area-inset-top)) var(--gutter) 0;
+}
+
+.site-header .name {
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* language switch: quiet codes in the corner */
+.langs {
+  display: flex;
+  margin-right: -5px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.langs a {
+  padding: 4px 5px;
+  color: var(--faint);
+  font-weight: 400;
+}
+
+.langs a[aria-current] { color: var(--ink); }
+
+.home .langs a { color: rgb(255 255 255 / 0.4); }
+.home .langs a[aria-current] { color: rgb(255 255 255 / 0.85); }
+
+.home .site-header {
+  position: absolute;
+  inset: 0 0 auto;
+}
+
+.article main { padding-top: 96px; }
+
+h1 {
+  margin: 0 0 32px;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 18px; }
+
+/* ---- the lake ---- */
+
+.lake {
+  position: relative;
+  height: clamp(420px, 86svh, 125vw);
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.lake canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  image-rendering: pixelated;
+  opacity: 0;
+  transition: opacity 1600ms var(--ease-out);
+}
+
+.lake.ready canvas { opacity: 1; }
+
+/* the gaps between dots, one device pixel wide, aligned to the canvas grid */
+.lake::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, var(--paper) var(--hair), transparent var(--hair)) 0 0 / var(--cell, 3px) var(--cell, 3px),
+    linear-gradient(to bottom, var(--paper) var(--hair), transparent var(--hair)) 0 0 / var(--cell, 3px) var(--cell, 3px);
+}
+
+/* ---- home index ---- */
+
+.home main { padding-top: 72px; }
+
+.rows {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  column-gap: 16px;
+  margin: 0;
+}
+
+.rows dt {
+  padding-top: 3px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.rows dd {
+  margin: 0 0 44px;
+}
+
+.rows dd > :last-child { margin-bottom: 0; }
+
+.links {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 520px) {
+  .rows { grid-template-columns: 1fr; }
+  .rows dt { margin-bottom: 10px; }
+}
+
+/* ---- subscribe ---- */
+
+.lead { margin: 0 0 10px; color: var(--muted); }
+
+.subscribe {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  max-width: 360px;
+}
+
+.subscribe input[type="email"] {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  background: transparent;
+  color: var(--link);
+  font: inherit;
+  font-size: 16px; /* no zoom-on-focus on iOS */
+  outline: none;
+  transition: border-color 150ms ease;
+}
+
+.subscribe input[type="email"]::placeholder { color: var(--faint); }
+.subscribe input[type="email"]:focus-visible { border-bottom-color: var(--pale); }
+
+.subscribe button {
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font: inherit;
+  font-weight: 450;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.subscribe button:disabled { opacity: 0.5; cursor: default; }
+.subscribe button:focus-visible { outline: 1px solid var(--pale); outline-offset: 4px; }
+
+.subscribe .trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+.subscribe-status { margin-top: 8px; }
+.subscribe-status a { color: var(--muted); font-weight: 400; }
+.subscribe-status[data-state="ok"] { color: var(--pale); }
+.subscribe-status[data-state="invalid"],
+.subscribe-status[data-state="error"] { color: var(--rose); }
+
+/* ---- updates ---- */
+
+.rows dt .where {
+  display: block;
+  color: var(--muted);
+}
+
+.note > p { margin: 0 0 12px; }
+.note > :last-child { margin-bottom: 0; }
+
+.note .meta { margin-top: 8px; }
+.note .meta a { color: var(--muted); font-weight: 400; }
+
+.notes { margin-top: 40px; }
+.notes dd { margin-bottom: 36px; }
+
+/* ---- writing ---- */
+
+.wide {
+  --w: min(920px, 100vw - 2 * var(--gutter));
+  width: var(--w);
+  margin-left: calc(50% - var(--w) / 2);
+}
+
+.writing { margin-top: 96px; }
+
+.writing > .label {
+  margin: 0 0 24px;
+  font-size: 11px;
+}
+
+.shelf {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 48px 24px;
+}
+
+.shelf a {
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 168 / 105;
+  background: var(--paper);
+}
+
+.shelf .cover {
+  margin-bottom: 18px;
+  transition: transform 200ms var(--ease-out);
+}
+
+.entry-title {
+  font-size: 18px;
+  font-weight: 550;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--link);
+  text-wrap: balance;
+}
+
+.entry-desc {
+  margin-top: 6px;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.meta > * + *::before {
+  content: "·";
+  margin: 0 8px;
+}
+
+.meta > [hidden] { display: none; }
+
+/* ---- article ---- */
+
+.post-cover { margin: 0 0 40px; }
+
+.article h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 550;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.article .meta { margin: 14px 0 48px; }
+
+.prose h2,
+.prose h3 {
+  margin: 40px 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 24px;
+  margin: 12px 0 24px;
+}
+
+.prose li { margin: 7px 0; }
+
+.prose li::marker { color: var(--faint); }
+
+.prose a {
+  text-decoration: underline;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 3px;
+}
+
+.prose strong { font-weight: 600; }
+
+.prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 24px auto;
+}
+
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: #16161a;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+.prose blockquote {
+  margin: 0 0 18px;
+  padding-left: 16px;
+  border-left: 1px solid var(--rule);
+  color: var(--muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a { transition: color 150ms ease; }
+
+  .site-header a:hover,
+  .home .langs a:hover,
+  .links a:hover,
+  .note a:hover,
+  .subscribe button:hover,
+  .subscribe-status a:hover,
+  .prose a:hover {
+    color: var(--rose);
+  }
+
+  .entry-title { transition: color 150ms ease; }
+  .shelf a:hover .entry-title { color: hsl(var(--hue, 0) 90% 82%); }
+  .shelf a:hover .cover { transform: translateY(-3px); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lake canvas,
+  .cover {
+    transition: none;
+  }
+}
+
+/* main.col, so the .col padding shorthand doesn't zero it out */
+main.col { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+
+/* Korean wraps between words, not inside them */
+:lang(ko) { word-break: keep-all; }

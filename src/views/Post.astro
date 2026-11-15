@@ -1,0 +1,77 @@
+---
+import { render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { isoDate, type LocalPost } from "../lib/posts";
+import { dict, fullDate, type Locale } from "../i18n";
+
+interface Props {
+  post: LocalPost;
+  locale: Locale;
+}
+
+const { post, locale } = Astro.props;
+const { Content } = await render(post.entry);
+---
+
+<Base title={`${post.title} · Kai Takami`} description={post.description} locale={locale}>
+  <article data-hue-host data-post={post.id} lang={post.lang === locale ? undefined : post.lang}>
+    <canvas class="cover post-cover" data-cover={post.id} aria-hidden="true"></canvas>
+    <h1>{post.title}</h1>
+    <p class="meta" lang={locale}>
+      <time datetime={isoDate(post.date)}>{fullDate(post.date, locale)}</time>
+      <span>{dict[locale].minutes(post.minutes)}</span>
+      <span data-reads hidden></span>
+    </p>
+    <div class="prose">
+      <Content />
+    </div>
+    <span data-read-end></span>
+  </article>
+</Base>
+
+<script>
+  import { drawAllCovers } from "../scripts/cover";
+  import { formatReads, isLocale } from "../i18n";
+
+  drawAllCovers();
+
+  const lang = document.documentElement.lang;
+  const locale = isLocale(lang) ? lang : "en";
+  const article = document.querySelector<HTMLElement>("[data-post]");
+  const slug = article?.dataset.post;
+  const label = document.querySelector<HTMLElement>("[data-reads]");
+  const show = (n: number) => {
+    if (!label || !n) return;
+    label.textContent = formatReads(n, locale);
+    label.hidden = false;
+  };
+
+  if (slug) {
+    const url = `/api/reads/${encodeURIComponent(slug)}`;
+    const key = `read:${slug}`;
+    fetch(url)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => d && show(d.reads))
+      .catch(() => {});
+
+    // a read counts once per browser, in any language: reaching the end, or staying a while
+    if (!localStorage.getItem(key)) {
+      let done = false;
+      const count = () => {
+        if (done) return;
+        done = true;
+        localStorage.setItem(key, "1");
+        io.disconnect();
+        clearTimeout(timer);
+        fetch(url, { method: "POST" })
+          .then((r) => (r.ok ? r.json() : null))
+          .then((d) => d && show(d.reads))
+          .catch(() => {});
+      };
+      const io = new IntersectionObserver((e) => e.some((x) => x.isIntersecting) && count());
+      const end = document.querySelector("[data-read-end]");
+      if (end) io.observe(end);
+      const timer = setTimeout(count, 45_000);
+    }
+  }
+</script>

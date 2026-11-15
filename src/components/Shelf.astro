@@ -1,0 +1,53 @@
+---
+import { isoDate, type LocalPost } from "../lib/posts";
+import { dict, fullDate, localePath, type Locale } from "../i18n";
+
+interface Props {
+  posts: LocalPost[];
+  locale: Locale;
+}
+
+const { posts, locale } = Astro.props;
+---
+
+<ol class="shelf" data-reads-list>
+  {
+    posts.map((post) => (
+      <li data-hue-host>
+        <a href={localePath(locale, `/blog/${post.id}`)}>
+          <canvas class="cover" data-cover={post.id} aria-hidden="true" />
+          <span class="entry-title">{post.title}</span>
+          <span class="entry-desc">{post.description}</span>
+          <span class="meta">
+            <time datetime={isoDate(post.date)}>{fullDate(post.date, locale)}</time>
+            <span>{dict[locale].minutes(post.minutes)}</span>
+            <span data-reads={post.id} hidden />
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ol>
+
+<script>
+  import { drawAllCovers } from "../scripts/cover";
+  import { formatReads, isLocale } from "../i18n";
+
+  drawAllCovers();
+
+  const lang = document.documentElement.lang;
+  const locale = isLocale(lang) ? lang : "en";
+
+  fetch("/api/reads")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((counts: Record<string, number> | null) => {
+      if (!counts) return;
+      for (const el of document.querySelectorAll<HTMLElement>("[data-reads]")) {
+        const n = counts[el.dataset.reads!];
+        if (!n) continue;
+        el.textContent = formatReads(n, locale);
+        el.hidden = false;
+      }
+    })
+    .catch(() => {});
+</script>
