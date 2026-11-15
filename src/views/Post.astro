@@ -13,7 +13,12 @@ const { post, locale } = Astro.props;
 const { Content } = await render(post.entry);
 ---
 
-<Base title={`${post.title} · Kai Takami`} description={post.description} locale={locale}>
+<Base
+  title={`${post.title} · Kai Takami`}
+  description={post.description}
+  locale={locale}
+  post={{ title: post.title, description: post.description, published: post.date, lang: post.lang }}
+>
   <article data-hue-host data-post={post.id} lang={post.lang === locale ? undefined : post.lang}>
     <canvas class="cover post-cover" data-cover={post.id} aria-hidden="true"></canvas>
     <h1>{post.title}</h1>

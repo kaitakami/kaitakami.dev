@@ -1,0 +1,11 @@
+{
+  "name": "Kai Takami",
+  "short_name": "Kai Takami",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0b0b0e",
+  "background_color": "#0b0b0e",
+  "display": "browser"
+}

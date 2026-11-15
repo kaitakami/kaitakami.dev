@@ -49,7 +49,7 @@ export const dict: Record<Locale, Dict> = {
   en: {
     name: "English",
     intl: "en-US",
-    description: "Kai Takami, CTO at Domu. Distributed systems, Postgres, road bikes.",
+    description: "Kai Takami is the CTO of Domu (YC S24), building AI voice agents for top-10 banks. Notes and writing on distributed systems, Postgres and road bikes.",
     sceneLabel: "The Seto Inland Sea, live with your local time and weather: a suspension bridge to Awaji, and a road bike leaning on the sea wall",
     rows: {
       now: [
