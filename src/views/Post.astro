@@ -17,7 +17,13 @@ const { Content } = await render(post.entry);
   title={`${post.title} · Kai Takami`}
   description={post.description}
   locale={locale}
-  post={{ title: post.title, description: post.description, published: post.date, lang: post.lang }}
+  post={{
+    title: post.title,
+    description: post.description,
+    published: post.date,
+    lang: post.lang,
+    image: `/og/${locale === "en" ? "" : `${locale}/`}${post.id}.png`,
+  }}
 >
   <article data-hue-host data-post={post.id} lang={post.lang === locale ? undefined : post.lang}>
     <canvas class="cover post-cover" data-cover={post.id} aria-hidden="true"></canvas>

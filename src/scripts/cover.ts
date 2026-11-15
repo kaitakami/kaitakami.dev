@@ -199,7 +199,11 @@ function scene(r: () => number): Field {
   return pick(r, families)(r);
 }
 
-export function drawCover(canvas: HTMLCanvasElement, seed: string) {
+export const COVER_COLS = COLS;
+export const COVER_ROWS = ROWS;
+
+/** The cover as data: one hue, a 7-step ink ramp as [h, s, l], and a level per cell. Same seed, same cover. */
+export function coverGrid(seed: string) {
   const r = rng(seed);
   const hue = Math.floor(r() * 360);
   const field = scene(r);
@@ -211,7 +215,7 @@ export function drawCover(canvas: HTMLCanvasElement, seed: string) {
     const h = hue - 20 + t * 35;                 // shadows lean cool, highlights warm
     const s = 14 + 40 * Math.sin(t * Math.PI);    // muted at both ends, like real light
     const l = 6 + Math.pow(t, 1.1) * 86;
-    return `hsl(${h} ${s}% ${l}%)`;
+    return [h, s, l] as const;
   });
 
   const grid = new Uint8Array(COLS * ROWS);
@@ -220,6 +224,12 @@ export function drawCover(canvas: HTMLCanvasElement, seed: string) {
       const v = clamp(field((i + 0.5) / COLS, 1 - (j + 0.5) / ROWS));
       grid[j * COLS + i] = Math.min(LEVELS - 1, Math.floor(v * (LEVELS - 1) + BAYER8[(j % 8) * 8 + (i % 8)]));
     }
+  return { hue, inks, grid };
+}
+
+export function drawCover(canvas: HTMLCanvasElement, seed: string) {
+  const { hue, inks: hsl, grid } = coverGrid(seed);
+  const inks = hsl.map(([h, s, l]) => `hsl(${h} ${s}% ${l}%)`);
 
   const paint = () => {
     const w = canvas.clientWidth;

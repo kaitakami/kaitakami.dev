@@ -11,7 +11,7 @@ interface Props {
   page?: "home" | "article";
   locale?: Locale;
   /** a blog post: marks the page as an article and describes it to search engines */
-  post?: { title: string; description: string; published: Date; lang: Locale };
+  post?: { title: string; description: string; published: Date; lang: Locale; image: string };
 }
 
 const { title, description, page = "article", locale = "en", post } = Astro.props;
@@ -20,7 +20,7 @@ const site = Astro.site!;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const canonical = new URL(path, site);
 const here = stripLocale(path);
-const ogImage = new URL("/og.png", site);
+const ogImage = new URL(post?.image ?? "/og.png", site);
 
 // Structured data: who this site is about, so search engines can tie it to the same person on X, GitHub and LinkedIn.
 const person = {
@@ -89,7 +89,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Kai Takami: a dithered dusk over the Seto Inland Sea, with a road bike on the sea wall" />
+    <meta property="og:image:alt" content={post ? `${post.title}, by Kai Takami` : "Kai Takami: a dithered dusk over the Seto Inland Sea, with a road bike on the sea wall"} />
     <meta property="og:locale" content={dict[locale].intl.replace("-", "_")} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
