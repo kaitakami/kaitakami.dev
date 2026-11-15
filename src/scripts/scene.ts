@@ -101,12 +101,15 @@ void palette() {
   MIST = mix(mix(vec3(0.2, 0.23, 0.3), vec3(0.8, 0.82, 0.84), uDay), vec3(0.54, 0.58, 0.62), uWarm * 0.5);
   GLOW = uMoon > 0.5 ? vec3(0.55, 0.65, 0.85) * 0.5 : mix(vec3(1.0, 0.96, 0.88), vec3(0.95, 0.78, 0.5), uWarm);
   // cloud cover greys the sky out and takes the light down
-  float g = smoothstep(0.3, 1.0, uCloud) * 0.75;   // a few clouds shouldn't grey the whole sky
-  ZENITH = mix(ZENITH, grey(ZENITH) * 0.85, g);
-  VIOLET = mix(VIOLET, grey(VIOLET) * 0.85, g);
-  ROSE = mix(ROSE, grey(ROSE) * 0.8, g);
-  EMBER = mix(EMBER, grey(EMBER) * 0.8, g);
-  HILL = mix(HILL, grey(HILL) * 0.85, g * 0.6);
+  // a few clouds shouldn't grey the whole sky; at night keep some of the moonlit blue
+  float g = smoothstep(0.3, 1.0, uCloud) * 0.75 * mix(0.45, 1.0, uDay);
+  // overcast in daylight is a bright, flat grey, not a dim one: grey it out and even it out
+  float lift = 1.0 + 0.25 * uDay;
+  ZENITH = mix(ZENITH, grey(mix(ZENITH, VIOLET, 0.6)) * lift, g);
+  VIOLET = mix(VIOLET, grey(mix(VIOLET, ROSE, 0.4)) * lift, g);
+  ROSE = mix(ROSE, grey(ROSE) * lift, g);
+  EMBER = mix(EMBER, grey(EMBER) * lift, g);
+  HILL = mix(HILL, grey(HILL) * 1.1, g * 0.6);
   MIST = mix(MIST, grey(MIST), g);
   SUN = uSun;
   BODY = (1.0 - 0.9 * uCloud) * smoothstep(-0.06, 0.0, SUN.y);
@@ -148,7 +151,9 @@ vec3 sky(vec2 p) {
     vec3 top = mix(ROSE, mix(vec3(0.98, 0.88, 0.68), vec3(0.95), 1.0 - uWarm), warm * 0.7) * mix(0.15, 1.0, light);
     under *= mix(0.6, 1.0, light);
     vec3 cc = mix(under, top, lit * (0.35 + 0.65 * warm));
-    c = mix(c, mix(cc, grey(cc) * 0.9, uCloud * 0.6), mask);
+    // under heavy cover the clouds are the sky: lit grey, not their shadowed undersides
+    vec3 sheet = mix(mix(VIOLET, ROSE, 0.5), grey(mix(VIOLET, ROSE, 0.5)), uDay) * mix(1.1, 1.05, uDay);
+    c = mix(c, mix(cc, sheet, smoothstep(0.4, 1.0, uCloud) * 0.85), mask);
   }
   float star = h21(floor(p * 260.0));
   float night = (1.0 - smoothstep(0.05, 0.4, uDay)) * (1.0 - uCloud);
