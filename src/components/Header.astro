@@ -1,0 +1,30 @@
+---
+import { dict, localePath, locales, stripLocale, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const here = stripLocale(Astro.url.pathname);
+---
+
+<header class="site-header">
+  <a class="name" href={localePath(locale, "/")}>Kai Takami</a>
+  <nav class="langs" aria-label={dict[locale].switchLabel}>
+    {
+      locales.map((l) => (
+        <a
+          href={localePath(l, here)}
+          hreflang={l}
+          lang={l}
+          title={dict[l].name}
+          aria-label={dict[l].name}
+          aria-current={l === locale ? "true" : undefined}
+        >
+          {l}
+        </a>
+      ))
+    }
+  </nav>
+</header>

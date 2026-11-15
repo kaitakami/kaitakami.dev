@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import Note from "../components/Note.astro";
+import { updatesFor } from "../lib/updates";
+import { dict, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = dict[locale];
+const notes = await updatesFor(locale);
+---
+
+<Base title={`${t.updates} · Kai Takami`} description={t.updatesDescription} locale={locale}>
+  <h1>{t.updates}</h1>
+  <dl class="rows notes">
+    {notes.map((note) => <Note note={note} locale={locale} />)}
+  </dl>
+</Base>

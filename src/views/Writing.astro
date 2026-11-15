@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import Shelf from "../components/Shelf.astro";
+import { postsFor } from "../lib/posts";
+import { dict, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = dict[locale];
+const posts = await postsFor(locale);
+---
+
+<Base title={`${t.writing} · Kai Takami`} description={t.writingDescription} locale={locale}>
+  <div class="wide">
+    <h1>{t.writing}</h1>
+    <Shelf posts={posts} locale={locale} />
+  </div>
+</Base>
