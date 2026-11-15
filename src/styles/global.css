@@ -4,7 +4,7 @@
   --ink: #d9d9dc;
   --link: #ffffff;
   --muted: #8b8b93;
-  --faint: #55555c;
+  --faint: #7a7a82; /* 4.6:1 on the paper, the minimum for small text */
   --rule: #1f1f24;
   --blue: #3169ff;
   --pale: #a9c2ff;
