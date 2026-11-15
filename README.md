@@ -9,7 +9,7 @@ pnpm dev
 
 ## Read counts
 
-Read counts and email sign-ups live in Upstash Redis. On Vercel, add Upstash Redis from the Marketplace (Storage tab) and connect it to the project; it sets `KV_REST_API_URL` and `KV_REST_API_TOKEN` (or the `UPSTASH_REDIS_REST_*` pair). Without them the counter stays hidden and sign-ups answer 503. Keys: `reads` (hash slug → count), `subscribers` (hash email → {at, lang}).
+Read counts and email sign-ups live in Upstash Redis (database `kaitakami-dev`, us-east-1). Set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in `.env` locally and in the Vercel project (already done for Production, Preview and Development); the `KV_REST_API_*` pair from the Vercel Marketplace integration works too. Without them the counter stays hidden and sign-ups answer 503. Keys: `reads` (hash slug → count), `subscribers` (hash email → {at, lang}).
 Without it the counter stays hidden and everything else works.
 
 A read is counted once per browser, when someone reaches the end of an essay or stays 45 seconds.

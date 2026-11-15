@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { isLocale } from "../../i18n";
-import { SUBSCRIBERS, redis } from "../../lib/redis";
+import { SUBSCRIBERS, redis, signupLimit } from "../../lib/redis";
 
 export const prerender = false;
 
@@ -33,11 +33,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!r) return reply("error", 503);
 
   try {
-    // five sign-ups an hour per address is plenty for people and dull for scripts
-    const key = `rl:subscribe:${clientAddress}`;
-    const n = await r.incr(key);
-    if (n === 1) await r.expire(key, 3600);
-    if (n > 5) return reply("error", 429);
+    const { success } = await signupLimit()!.limit(clientAddress);
+    if (!success) return reply("error", 429);
 
     await r.hsetnx(SUBSCRIBERS, email, JSON.stringify({ at: new Date().toISOString(), lang: isLocale(lang) ? lang : "en" }));
     return reply("ok", 200);

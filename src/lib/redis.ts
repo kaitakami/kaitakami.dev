@@ -1,3 +1,4 @@
+import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import {
   KV_REST_API_TOKEN,
@@ -23,3 +24,13 @@ export function redis() {
 // keys
 export const READS = "reads"; // hash: slug → reads
 export const SUBSCRIBERS = "subscribers"; // hash: email → {"at": iso, "lang": "en"}
+
+let signups: Ratelimit | null = null;
+
+/** Five sign-ups an hour per IP: plenty for people, dull for scripts. null without Redis. */
+export function signupLimit() {
+  const r = redis();
+  if (!r) return null;
+  signups ??= new Ratelimit({ redis: r, limiter: Ratelimit.slidingWindow(5, "1 h"), prefix: "rl:subscribe" });
+  return signups;
+}
