@@ -155,6 +155,11 @@ p { margin: 0 0 18px; }
 
 .lake.ready canvas { opacity: 1; }
 
+/* Phones: frame the scene to its content (sky, bridge, wall) instead of a tall strip of empty sea. */
+@media (max-width: 640px) {
+  .lake { height: max(360px, 104vw); }
+}
+
 /* the gaps between dots, one device pixel wide, aligned to the canvas grid */
 .lake::after {
   content: "";

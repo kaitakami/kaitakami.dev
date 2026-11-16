@@ -15,6 +15,7 @@ uniform float uReveal;
 uniform vec2 uPointer;
 uniform float uLamp;
 uniform float uMinW;
+uniform float uLift; // shifts the view down on phones, so the frame isn't mostly sea wall
 uniform vec3 uPaper;
 // sky state: where the sun (or moon) is, how much daylight, how warm the low light is, and the weather
 uniform vec2 uSun;
@@ -330,7 +331,9 @@ vec4 near(vec2 p) {
   }
 
   float px = gHalfW - 0.15;
-  if (abs(p.x - px) < 0.008 && p.y > ground - 0.02) cover = 1.0;
+  // the pole stops just above its crossbar, so a tall phone frame doesn't stretch it into the clouds
+  if (abs(p.x - px) < 0.008 && p.y > ground - 0.02 && p.y < 0.405) cover = 1.0;
+  if (abs(p.x - px) < 0.011 && abs(p.y - 0.405) < 0.004) cover = 1.0;
   if (abs(p.y - 0.37) < 0.0035 && abs(p.x - px) < 0.07) cover = 1.0;
   if (abs(p.y - 0.32) < 0.003 && abs(p.x - px) < 0.05) cover = 1.0;
   for (int i = 0; i < 3; i++) {
@@ -368,7 +371,7 @@ void main() {
   palette();
   vec2 cell = floor(gl_FragCoord.xy);
   float scale = min(uRes.y, uRes.x / uMinW);
-  vec2 p = (cell + 0.5 - 0.5 * uRes) / scale;
+  vec2 p = (cell + 0.5 - 0.5 * uRes) / scale - vec2(0.0, uLift);
   vec2 halfSize = 0.5 * uRes / scale;
   gPx = 1.0 / scale;
   gHalfW = halfSize.x;
@@ -383,7 +386,7 @@ void main() {
   if (uRain > 0.0) c = mix(c, mix(MIST, vec3(0.85, 0.9, 1.0), 0.4), rainAt(cell) * 0.55);
   if (uSnow > 0.0) c = mix(c, vec3(0.92, 0.94, 0.98) * (0.55 + 0.45 * uDay), snowAt(cell));
 
-  float fade = (1.0 - smoothstep(0.94, 1.0, abs(p.x) / halfSize.x)) * (1.0 - smoothstep(0.86, 1.0, -p.y / halfSize.y));
+  float fade = (1.0 - smoothstep(0.94, 1.0, abs(p.x) / halfSize.x)) * (1.0 - smoothstep(0.86, 1.0, -(p.y + uLift) / halfSize.y));
   c *= fade;
 
   // ordered dither, eight levels per channel: enough for real gradients, still visibly dotted
@@ -445,13 +448,14 @@ export function mountScene(canvas: HTMLCanvasElement, stage: HTMLElement, onRead
 
   const u = (n: string) => gl.getUniformLocation(prog, n);
   const uRes = u("uRes"), uTime = u("uTime"), uReveal = u("uReveal");
-  const uPointer = u("uPointer"), uLamp = u("uLamp"), uMinW = u("uMinW");
+  const uPointer = u("uPointer"), uLamp = u("uLamp"), uMinW = u("uMinW"), uLift = u("uLift");
   const uSky = {
     sun: u("uSun"), day: u("uDay"), warm: u("uWarm"), moon: u("uMoon"), cloud: u("uCloud"),
     rain: u("uRain"), snow: u("uSnow"), murk: u("uMurk"), flash: u("uFlash"),
   };
   let cell = 3; // CSS px per dot
   let minW = 0.9;
+  let lift = 0;
   gl.uniform3fv(u("uPaper"), new Float32Array(hex("#0b0b0e")));
 
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -501,7 +505,7 @@ export function mountScene(canvas: HTMLCanvasElement, stage: HTMLElement, onRead
     const scale = Math.min(canvas.height, canvas.width / minW);
     const cx = (clientX - r.left) / cell;
     const cy = canvas.height - (clientY - r.top) / cell;
-    return [(cx - canvas.width / 2) / scale, (cy - canvas.height / 2) / scale];
+    return [(cx - canvas.width / 2) / scale, (cy - canvas.height / 2) / scale - lift];
   };
 
   const resize = () => {
@@ -515,6 +519,8 @@ export function mountScene(canvas: HTMLCanvasElement, stage: HTMLElement, onRead
     stage.style.setProperty("--cell", `${cell}px`);
     stage.style.setProperty("--hair", `${dpr >= 2 ? 1 / dpr : 1}px`);
     gl.uniform1f(uMinW, minW);
+    lift = narrow ? -0.09 : 0;
+    gl.uniform1f(uLift, lift);
     const cols = Math.max(1, Math.ceil(r.width / cell));
     const rows = Math.max(1, Math.ceil(r.height / cell));
     canvas.width = cols;
