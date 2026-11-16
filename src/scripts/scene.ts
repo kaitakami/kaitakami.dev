@@ -508,9 +508,12 @@ export function mountScene(canvas: HTMLCanvasElement, stage: HTMLElement, onRead
     const r = stage.getBoundingClientRect();
     // narrow screens get finer dots and a wider view, so the hills stay in frame
     const narrow = r.width < 640;
-    cell = narrow ? 2 : 3;
+    // Snap dots and gaps to whole device pixels; a 0.5px gap on a 3x phone rounds unevenly and shimmers.
+    const dpr = window.devicePixelRatio || 1;
+    cell = Math.max(1, Math.round((narrow ? 2 : 3) * dpr)) / dpr;
     minW = narrow ? 1.25 : 0.9;
     stage.style.setProperty("--cell", `${cell}px`);
+    stage.style.setProperty("--hair", `${dpr >= 2 ? 1 / dpr : 1}px`);
     gl.uniform1f(uMinW, minW);
     const cols = Math.max(1, Math.ceil(r.width / cell));
     const rows = Math.max(1, Math.ceil(r.height / cell));
